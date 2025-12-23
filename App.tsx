@@ -1,9 +1,9 @@
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { XIAOHUA_WISHES } from './constants';
-import { ChristmasWish } from './types';
-import Snowfall from './components/Snowfall';
-import { generateExtraWish } from './services/geminiService';
+import React, { useState, useEffect } from 'react';
+import { XIAOHUA_WISHES } from './constants.ts';
+import { ChristmasWish } from './types.ts';
+import Snowfall from './components/Snowfall.tsx';
+import { generateExtraWish } from './services/geminiService.ts';
 
 const App: React.FC = () => {
   const [currentWish, setCurrentWish] = useState<ChristmasWish | null>(null);
@@ -37,11 +37,11 @@ const App: React.FC = () => {
       {/* Decorative Lights */}
       <div className="absolute top-0 w-full flex justify-around opacity-70">
          {[...Array(10)].map((_, i) => (
-           <div key={i} className={`w-4 h-4 rounded-full shadow-lg animate-pulse bg-${i % 2 === 0 ? 'red-500' : 'yellow-300'} blur-sm`}></div>
+           <div key={i} className={`w-4 h-4 rounded-full shadow-lg animate-pulse ${i % 2 === 0 ? 'bg-red-500' : 'bg-yellow-300'} blur-sm`}></div>
          ))}
       </div>
 
-      <div className="z-10 w-full max-w-md perspective-1000">
+      <div className="z-10 w-full max-w-md">
         {!isOpened ? (
           <div 
             onClick={handleOpenCard}
@@ -62,7 +62,7 @@ const App: React.FC = () => {
             </div>
           </div>
         ) : (
-          <div className="animate-in fade-in zoom-in duration-700">
+          <div className="animate-[fadeIn_0.7s_ease-out]">
             <div className="bg-slate-50 rounded-xl shadow-2xl overflow-hidden flex flex-col items-center relative min-h-[500px] border-8 border-red-700">
               {/* Header Decoration */}
               <div className="w-full h-32 bg-red-700 flex items-center justify-center relative">
@@ -85,11 +85,11 @@ const App: React.FC = () => {
                 </div>
 
                 {extraWish && (
-                  <div className="w-full p-4 bg-yellow-50 border-l-4 border-yellow-500 rounded animate-in slide-in-from-bottom-4 duration-500">
+                  <div className="w-full p-4 bg-yellow-50 border-l-4 border-yellow-500 rounded animate-[slideUp_0.5s_ease-out]">
                     <p className="text-xs text-yellow-700 font-bold mb-1 uppercase tracking-widest flex items-center">
                        <span className="mr-1">✨</span> AI 特别祝福
                     </p>
-                    <p className="text-gray-700 italic text-sm italic">{extraWish}</p>
+                    <p className="text-gray-700 italic text-sm">{extraWish}</p>
                   </div>
                 )}
 
@@ -135,6 +135,11 @@ const App: React.FC = () => {
       <div className="fixed bottom-4 text-white/30 text-[10px] tracking-[0.2em] uppercase font-serif z-20">
         Designed for Xiaohua with Love
       </div>
+
+      <style>{`
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+      `}</style>
     </div>
   );
 };

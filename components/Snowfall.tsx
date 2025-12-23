@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
-import { SnowFlake } from '../types';
+import { SnowFlake } from '../types.ts';
 
 const Snowfall: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
